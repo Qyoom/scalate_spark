@@ -6,4 +6,7 @@ class ScalatraBootstrap extends LifeCycle {
   override def init(context: ServletContext) {
     context.mount(new MyScalatraServlet, "/*")
   }
+  override def destroy(context: ServletContext) {
+    spark.Worker.stop
+  }
 }

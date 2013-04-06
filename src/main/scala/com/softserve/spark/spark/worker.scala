@@ -1,22 +1,38 @@
 package com.softserve.spark.spark
 
-import spark.SparkContext
+import spark._
 import SparkContext._
 
 object Worker {
-  val sc = new SparkContext("local", "wordCount")
+  lazy val sc = new SparkContext("local", "wordCount")
+  def stop = sc.stop
 
   def wordsCount(): Long = {
     sc.parallelize(data).flatMap { _.split(" ") }.count
   }
-  val data = """
-    The master parameter is a string specifying a Spark or Mesos
-    cluster URL to connect to, or a special “local” string to run in
-    local mode, as described below. appName is a name for your
-    application, which will be shown in the cluster web UI. Finally, the
-    last two parameters are needed to deploy your code to a cluster if running in distributed mode, as described later.
-    In the Spark shell, a special interpreter-aware SparkContext is already created for you, in the variable
-    called sc. Making your own SparkContext will not work. You can set which master the
-    context connects to using the MASTER environment variable. For example, to run on four cores, use
-    """.lines.toIndexedSeq
+  lazy val linearData = sc.parallelize(data)
+  private val data = """60 3.1
+61 3.6
+62 3.8
+63 4
+65 4.1""".lines.toIndexedSeq
+  def regression(input: RDD[String]): (Double, Double) = {
+    // TODO I don't know what is the correct pattern in spark - one big task (merge sequental maps in one)
+    // or smaller ones?
+    val rawData = input.map { _.split(" ") }.map { s => (s(0).toDouble, s(1).toDouble) }.cache
+    // TODO Probably I would use something like this:
+    // rawData.map { s => (s._1, s._2, s._1 * s._2, s._1 * s._1) }.reduce { /* scalaz mplus or hand-made tuple sum */  }
+    // anyway, code below looks better so I leave it for demo
+    val xsum = rawData.map { _._1 }.sum
+    val ysum = rawData.map { _._2 }.sum
+    val xysum = rawData.map { s => s._1 * s._2 }.sum
+    val xxsum = rawData.map { s => s._1 * s._1 }.sum
+    val n = rawData.count
+
+    println (xsum, ysum, xysum, xxsum)
+    val b = (n * xysum - xsum * ysum) / (n * xxsum - xsum * xsum)
+    val a = (ysum - b * xsum) / n
+
+    (a, b)
+  }
 }
