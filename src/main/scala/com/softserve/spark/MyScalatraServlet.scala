@@ -10,8 +10,8 @@ class MyScalatraServlet extends SparkscalatraAppStack {
       <body>
         <h1>Hello, world!</h1>
         Say <a href="hello-scalate">hello to Scalate</a>.
+        Result is {spark.Worker.wordsCount}
       </body>
     </html>
   }
-  
 }

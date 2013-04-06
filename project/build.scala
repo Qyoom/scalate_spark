@@ -9,7 +9,7 @@ object SparkscalatraAppBuild extends Build {
   val Organization = "com.softserve"
   val Name = "Spark and Scalatra app"
   val Version = "0.1.0-SNAPSHOT"
-  val ScalaVersion = "2.10.0"
+  val ScalaVersion = "2.9.2"
   val ScalatraVersion = "2.2.0"
 
   lazy val project = Project (
@@ -20,12 +20,15 @@ object SparkscalatraAppBuild extends Build {
       name := Name,
       version := Version,
       scalaVersion := ScalaVersion,
-      resolvers += Classpaths.typesafeReleases,
+      resolvers ++= Seq(Classpaths.typesafeReleases,
+        "Typesafe" at "http://repo.typesafe.com/typesafe/releases/",
+        "spray repo" at "http://repo.spray.io"),
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
+        "org.spark-project" % "spark-core_2.9.2" % "0.7.0",
         "org.eclipse.jetty" % "jetty-webapp" % "8.1.8.v20121106" % "container",
         "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
       ),
