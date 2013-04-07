@@ -6,8 +6,9 @@ import org.fusesource.scalate.{ TemplateEngine, Binding }
 import org.fusesource.scalate.layout.DefaultLayoutStrategy
 import javax.servlet.http.HttpServletRequest
 import collection.mutable
+import org.scalatra.json._
 
-trait SparkscalatraAppStack extends ScalatraServlet with ScalateSupport {
+trait SparkscalatraAppStack extends ScalatraServlet with ScalateSupport with JacksonJsonSupport {
 
   /* wire up the precompiled templates */
   override protected def defaultTemplatePath: List[String] = List("/WEB-INF/templates/views")
