@@ -11,7 +11,10 @@ object Worker {
   def regression(input: RDD[String]): (Double, Double) = {
     // TODO I don't know what is the correct pattern in spark - one big task (merge sequental maps in one)
     // or smaller ones?
-    val rawData = input.map { _.split(" ") }.map { s => (s(0).toDouble, s(1).toDouble) }.cache
+    val rawData = input.map { _.split("\\s+") }
+      .filter{ _.length == 3 }
+      .map { s => (s(1).toDouble, s(2).toDouble) }
+      .cache
     // TODO Probably I would use something like this:
     // rawData.map { s => (s._1, s._2, s._1 * s._2, s._1 * s._1) }.reduce { /* scalaz mplus or hand-made tuple sum */  }
     // anyway, code below looks better so I leave it for demo
