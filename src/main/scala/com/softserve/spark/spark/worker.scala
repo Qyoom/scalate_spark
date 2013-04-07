@@ -7,15 +7,7 @@ object Worker {
   lazy val sc = new SparkContext("local", "wordCount")
   def stop = sc.stop
 
-  def wordsCount(): Long = {
-    sc.parallelize(data).flatMap { _.split(" ") }.count
-  }
-  lazy val linearData = sc.parallelize(data)
-  private val data = """60 3.1
-61 3.6
-62 3.8
-63 4
-65 4.1""".lines.toIndexedSeq
+  lazy val linearData = sc.textFile("hdfs://localhost:54310/regression.dat")
   def regression(input: RDD[String]): (Double, Double) = {
     // TODO I don't know what is the correct pattern in spark - one big task (merge sequental maps in one)
     // or smaller ones?
@@ -29,7 +21,6 @@ object Worker {
     val xxsum = rawData.map { s => s._1 * s._1 }.sum
     val n = rawData.count
 
-    println (xsum, ysum, xysum, xxsum)
     val b = (n * xysum - xsum * ysum) / (n * xxsum - xsum * xsum)
     val a = (ysum - b * xsum) / n
 
