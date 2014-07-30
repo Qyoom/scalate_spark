@@ -6,7 +6,7 @@ import com.mojolly.scalate.ScalatePlugin._
 import ScalateKeys._
 
 object SparkscalatraAppBuild extends Build {
-  val Organization = "com.softserve"
+  val Organization = "com.qyoom"
   val Name = "Spark and Scalatra app"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.0"

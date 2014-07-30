@@ -1,4 +1,4 @@
-package com.softserve.spark
+package com.qyoom.learn
 
 import org.scalatra._
 import scalate.ScalateSupport

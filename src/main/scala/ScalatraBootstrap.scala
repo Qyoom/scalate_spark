@@ -1,4 +1,4 @@
-import com.softserve.spark._
+import com.qyoom.learn._
 import org.scalatra._
 import javax.servlet.ServletContext
 

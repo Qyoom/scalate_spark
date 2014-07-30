@@ -1,4 +1,4 @@
-package com.softserve.spark
+package com.qyoom.learn
 
 import org.scalatra._
 import scalate.ScalateSupport
@@ -7,6 +7,8 @@ import org.json4s.{DefaultFormats, Formats}
 
 class MyScalatraServlet extends SparkscalatraAppStack {
   import analytics.Worker._
+  import analytics.SparkPi._
+
   protected implicit val jsonFormats: Formats = DefaultFormats
 
   before(""".*\.json""".r) {
@@ -24,5 +26,9 @@ class MyScalatraServlet extends SparkscalatraAppStack {
 
   get("/test") {
     test()
+  }
+
+  get("/pi") {
+    calcPi()
   }
 }
