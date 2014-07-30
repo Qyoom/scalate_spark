@@ -22,7 +22,7 @@ class MyScalatraServlet extends SparkscalatraAppStack {
     </html>
   }
 
-  get("/data.json") {
-    linearRegression(regressionData)
+  get("/test") {
+    test()
   }
 }
