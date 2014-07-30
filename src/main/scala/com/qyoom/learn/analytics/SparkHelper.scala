@@ -4,7 +4,9 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 object SparkHelper {
 
-    def getSparkContext(args: Array[String], title: String = "Spark Template") = {
+    def getSparkContext(
+    			args: Array[String] = Array[String](), title: String = "Spark Template"
+	) = {
         assert(args.length == 0 || args.length == 2 || args.length == 3)
         val cores = Runtime.getRuntime.availableProcessors()
         val parallelism = if (args.length == 3) args(2) else s"${3 * cores}"
@@ -25,10 +27,10 @@ object SparkHelper {
             "JARS: " + JARS + "\n" +
             "App name: " + title + "\n" +
             "SPARK_HOME: " + System.getenv("SPARK_HOME") + "\n" +
-            "-----------------------------------------------------"
+            "---------------------------------------------------------"
         )
         
         new SparkContext(conf)
-    }
+    } // end getSparkContext
 
 }

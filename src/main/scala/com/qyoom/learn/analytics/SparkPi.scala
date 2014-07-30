@@ -2,18 +2,13 @@ package com.qyoom.learn.analytics
 
 import org.apache.spark._
 import org.apache.spark.SparkContext._
-
-import com.qyoom.learn.analytics.SparkHelper._
-
 import scala.math.random
 
 /** Computes an approximation to pi */
 object SparkPi {
 
-	//val conf = new SparkConf().setAppName("Spark Pi").setMaster("localhost")
 	val args = Array[String]()
     val sc = SparkHelper.getSparkContext(args, "SparkPi")
-    //lazy val sc = new SparkContext("local", "Calc Pi")
   	def stop = sc.stop
 
 	def calcPi(slices: Int = 2) {
